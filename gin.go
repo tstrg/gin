@@ -55,6 +55,10 @@ type Engine struct {
 	pool             sync.Pool
 	trees            methodTrees
 
+	// added for swagger
+	HandleOPTIONS       bool
+	ApiDescriptionsJson map[string]string
+
 	// Enables automatic redirection if the current route can't be matched but a
 	// handler for the path with (without) the trailing slash exists.
 	// For example if /foo/ is requested but a route only exists for /foo, the
@@ -123,6 +127,7 @@ func New() *Engine {
 		trees:                  make(methodTrees, 0, 9),
 		delims:                 render.Delims{Left: "{{", Right: "}}"},
 		secureJsonPrefix:       "while(1);",
+		HandleOPTIONS:          true, // added for swagger
 	}
 	engine.RouterGroup.engine = engine
 	engine.pool.New = func() interface{} {
